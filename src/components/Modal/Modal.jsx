@@ -1,46 +1,82 @@
-import { Component } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import css from "./Modal.module.css";
 
-export class Modal extends Component {
-  componentDidMount() {
+export const Modal = ({ largeImageURL, tags, toggleIsModalVisible }) => {
+  useEffect(() => {
     // Dodanie obsługi zdarzenia dla naciśnięcia klawisza Esc po zamontowaniu komponentu
-    window.addEventListener("keydown", this.handleKeyDown);
-  }
+    window.addEventListener("keydown", handleKeyDown);
+  }, []);
 
-  componentWillUnmount() {
+  useEffect(() => {
     // Usunięcie obsługi zdarzenia po odmontowaniu komponentu
-    window.removeEventListener("keydown", this.handleKeyDown);
-  }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
-  handleKeyDown = event => {
+  const handleKeyDown = (event) => {
     // Sprawdzenie, czy naciśnięto klawisz Esc
     if (event.key === "Escape") {
-      this.props.toggleIsModalVisible();
+      toggleIsModalVisible();
     }
   };
 
-  handleOverlayClick = event => {
+  const handleOverlayClick = (event) => {
     // Sprawdzenie, czy kliknięcie nastąpiło poza obszarem zdjęcia
     if (event.target === event.currentTarget) {
-      this.props.toggleIsModalVisible();
+      toggleIsModalVisible();
     }
   };
 
-  render() {
-    return (
-      <div className={css.overlay} onClick={this.handleOverlayClick}>
-        <div className={css.modal}>
-          <img
-            src={this.props.largeImageURL}
-            title={this.props.tags}
-            alt={this.props.tags}
-          />
-        </div>
+  return (
+    <div className={css.overlay} onClick={handleOverlayClick}>
+      <div className={css.modal}>
+        <img src={largeImageURL} title={tags} alt={tags} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+// export class Modal extends Component {
+//   componentDidMount() {
+//     // Dodanie obsługi zdarzenia dla naciśnięcia klawisza Esc po zamontowaniu komponentu
+//     window.addEventListener("keydown", this.handleKeyDown);
+//   }
+
+//   componentWillUnmount() {
+//     // Usunięcie obsługi zdarzenia po odmontowaniu komponentu
+//     window.removeEventListener("keydown", this.handleKeyDown);
+//   }
+
+//   handleKeyDown = (event) => {
+//     // Sprawdzenie, czy naciśnięto klawisz Esc
+//     if (event.key === "Escape") {
+//       this.props.toggleIsModalVisible();
+//     }
+//   };
+
+//   handleOverlayClick = (event) => {
+//     // Sprawdzenie, czy kliknięcie nastąpiło poza obszarem zdjęcia
+//     if (event.target === event.currentTarget) {
+//       this.props.toggleIsModalVisible();
+//     }
+//   };
+
+//   render() {
+//     return (
+//       <div className={css.overlay} onClick={this.handleOverlayClick}>
+//         <div className={css.modal}>
+//           <img
+//             src={this.props.largeImageURL}
+//             title={this.props.tags}
+//             alt={this.props.tags}
+//           />
+//         </div>
+//       </div>
+//     );
+//   }
+// }
 
 Modal.propTypes = {
   toggleIsModalVisible: PropTypes.func.isRequired,
