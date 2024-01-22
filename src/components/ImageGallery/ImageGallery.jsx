@@ -62,6 +62,7 @@ export const ImageGallery = ({
 //     );
 //   }
 // }
+// old
 
 ImageGallery.propTypes = {
   data: PropTypes.array.isRequired,
