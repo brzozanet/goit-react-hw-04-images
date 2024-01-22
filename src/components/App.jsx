@@ -1,10 +1,10 @@
 import { Component } from "react";
-import { ImageGallery } from "./components/ImageGallery/ImageGallery";
-import { Searchbar } from "./components/Searchbar/Searchbar";
-import { getPhotos, IMG_PER_PAGE } from "./services/pixabayAPI";
-import { Loader } from "./components/Loader/Loader";
-import { Button } from "./components/Button/Button";
-import { Modal } from "./components/Modal/Modal";
+import { ImageGallery } from "./ImageGallery";
+import { Searchbar } from "./Searchbar/Searchbar";
+import { getPhotos, IMG_PER_PAGE } from "../services/pixabayAPI";
+import { Loader } from "./Loader/Loader";
+import { Button } from "./Button/Button";
+import { Modal } from "./Modal";
 
 export class App extends Component {
   state = {
@@ -18,7 +18,7 @@ export class App extends Component {
     selectedPhoto: null,
   };
 
-  handleSearch = async (querySearch) => {
+  handleSearch = async querySearch => {
     try {
       this.setState({
         isLoading: true,
@@ -49,7 +49,7 @@ export class App extends Component {
   handleLoadMore = async () => {
     try {
       this.setState(
-        (prevState) => ({
+        prevState => ({
           isLoading: true,
           errorMessage: "",
           page: prevState.page + 1,
@@ -61,7 +61,7 @@ export class App extends Component {
             this.state.page
           );
 
-          this.setState((prevState) => ({
+          this.setState(prevState => ({
             photos: [...prevState.photos, ...morePhotos],
             isLoading: false,
           }));
@@ -76,12 +76,12 @@ export class App extends Component {
     }
   };
 
-  handleSelectPhoto = (photo) => {
+  handleSelectPhoto = photo => {
     this.setState({ selectedPhoto: photo });
   };
 
-  toggleIsModalVisible = (photo) => {
-    this.setState((prevState) => ({
+  toggleIsModalVisible = photo => {
+    this.setState(prevState => ({
       isModalVisible: !prevState.isModalVisible,
       selectedPhoto: photo || null,
     }));
