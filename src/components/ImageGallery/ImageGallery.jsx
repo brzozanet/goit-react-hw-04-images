@@ -65,4 +65,6 @@ export const ImageGallery = ({
 
 ImageGallery.propTypes = {
   data: PropTypes.array.isRequired,
+  handleSelectPhoto: PropTypes.func.isRequired,
+  toggleIsModalVisible: PropTypes.func.isRequired,
 };
